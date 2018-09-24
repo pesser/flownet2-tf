@@ -15,9 +15,7 @@ class Mode(Enum):
     TEST = 2
 
 
-class Net(object):
-    __metaclass__ = abc.ABCMeta
-
+class Net(object, metaclass=abc.ABCMeta):
     def __init__(self, mode=Mode.TRAIN, debug=False):
         self.global_step = slim.get_or_create_global_step()
         self.mode = mode
@@ -101,7 +99,7 @@ class Net(object):
         tf.summary.scalar('loss', total_loss)
 
         if checkpoints:
-            for (checkpoint_path, (scope, new_scope)) in checkpoints.iteritems():
+            for (checkpoint_path, (scope, new_scope)) in checkpoints.items():
                 variables_to_restore = slim.get_variables(scope=scope)
                 renamed_variables = {
                     var.op.name.split(new_scope + '/')[1]: var

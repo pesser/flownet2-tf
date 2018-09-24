@@ -479,7 +479,7 @@ def main():
     # Parse prototxt and inject `vars`
     proto = open(arch['DEPLOY_PROTOTXT']).readlines()
     for line in proto:
-        for key, value in vars.items():
+        for key, value in list(vars.items()):
             tag = "$%s$" % key
             line = line.replace(tag, str(value))
         tmp.write(line)
@@ -489,7 +489,7 @@ def main():
     net = caffe.Net(tmp.name, arch['CAFFEMODEL'], caffe.TEST)
 
     out = {}
-    for (caffe_param, tf_param) in arch['PARAMS'].items():
+    for (caffe_param, tf_param) in list(arch['PARAMS'].items()):
         # Caffe stores weights as (channels_out, channels_in, h, w)
         # but TF expects (h, w, channels_in, channels_out)
         out[tf_param + '/weights'] = net.params[caffe_param][0].data.transpose((2, 3, 1, 0))

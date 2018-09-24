@@ -16,9 +16,9 @@ def main():
     #  unpack the dictionary since serializing to .npy stored it in an array
     parameters = parameters[()]
 
-    for (name, param) in parameters.iteritems():
+    for (name, param) in parameters.items():
         tf.Variable(param, name=name)
-        print("Saving variable `" + name + "` of shape ", param.shape)
+        print(("Saving variable `" + name + "` of shape ", param.shape))
 
     global_step = slim.get_or_create_global_step()
 
@@ -27,7 +27,7 @@ def main():
         sess.run(tf.global_variables_initializer())
         input_name = os.path.splitext(FLAGS.input)[0]
         save_path = saver.save(sess, input_name + '.ckpt', global_step=global_step)
-        print("Model saved in file: %s" % save_path)
+        print(("Model saved in file: %s" % save_path))
 
 
 if __name__ == '__main__':

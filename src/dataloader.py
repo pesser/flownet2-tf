@@ -132,7 +132,7 @@ def config_to_arrays(dataset_config):
         del config['coeff_schedule_param']
 
     # Get all attributes
-    for (name, value) in config.iteritems():
+    for (name, value) in config.items():
         if name == 'coeff_schedule_param':
             output['coeff_schedule'] = [value['half_life'],
                                         value['initial_coeff'],
@@ -234,7 +234,7 @@ def load_batch(dataset_config, split_name, global_step):
             common_queue_min=1024,
             reader_kwargs=reader_kwargs)
         image_a, image_b, flow = data_provider.get(['image_a', 'image_b', 'flow'])
-        image_a, image_b, flow = map(tf.to_float, [image_a, image_b, flow])
+        image_a, image_b, flow = list(map(tf.to_float, [image_a, image_b, flow]))
 
         if dataset_config['PREPROCESS']['scale']:
             image_a = image_a / 255.0
@@ -245,7 +245,7 @@ def load_batch(dataset_config, split_name, global_step):
         config_a = config_to_arrays(dataset_config['PREPROCESS']['image_a'])
         config_b = config_to_arrays(dataset_config['PREPROCESS']['image_b'])
 
-        image_as, image_bs, flows = map(lambda x: tf.expand_dims(x, 0), [image_a, image_b, flow])
+        image_as, image_bs, flows = [tf.expand_dims(x, 0) for x in [image_a, image_b, flow]]
 
         # Perform data augmentation on GPU
         with tf.device('/cpu:0'):

@@ -1,5 +1,5 @@
 Fork of [sampepose](https://github.com/sampepose/flownet2-tf) adapted to
-`python3` and with improved `Makefile`. Make sure to set `CUDA_HOME`.
+`python3` and with simplified `Makefile`.
 Original `README.md` coming up:
 
 ## FlowNet2 (TensorFlow)

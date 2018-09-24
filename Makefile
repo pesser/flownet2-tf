@@ -10,11 +10,11 @@ endif
 CC        = gcc -O2 -pthread
 CXX       = g++
 GPUCC     = nvcc
-CFLAGS    = $(TF_INCL) -std=c++11 -I$(TF_INC) -I"$(CUDA_HOME)/include" -I"$(CUDA_HOME)" -DGOOGLE_CUDA=1
+CFLAGS    = $(TF_INCL) -std=c++11 -I"$(CUDA_HOME)/.." -DGOOGLE_CUDA=1
 GPUCFLAGS = -c --expt-relaxed-constexpr
 LFLAGS    = $(TF_LINK) -pthread -shared -fPIC
 GPULFLAGS = -x cu -Xcompiler -fPIC
-CGPUFLAGS = -L$(CUDA_HOME)/lib -L$(CUDA_HOME)/lib64 -lcudart
+CGPUFLAGS = -lcudart
 
 OUT_DIR   = src/ops/build
 PREPROCESSING_SRC = "src/ops/preprocessing/preprocessing.cc" "src/ops/preprocessing/kernels/flow_augmentation.cc" "src/ops/preprocessing/kernels/augmentation_base.cc" "src/ops/preprocessing/kernels/data_augmentation.cc"
